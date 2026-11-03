@@ -15,6 +15,8 @@ const projects = defineCollection({
       order: z.number().int(),
       featured: z.boolean().default(false),
       stack: z.array(z.string()).min(1),
+      // Stack-Einträge, die Teammitglieder gebaut haben: auf der Projektseite sichtbar, zählen aber nicht als Tims Skill
+      teamStack: z.array(z.string()).optional(),
       repo: z.url().optional(),
       grade: z.string().optional(),
       draft: z.boolean().default(false),

@@ -9,6 +9,7 @@ order: 2
 featured: true
 diagram: "Architecture of Pythia. The Streamlit web app, built by a teammate, sends the user input through a guardrail to seven role agents on AWS Bedrock AgentCore. The agents use tools via a gateway and a knowledge base, and return the AI maturity assessment and use cases with a business case to the app. My part: guardrail, role agents, gateway and knowledge base."
 stack: [AWS Bedrock AgentCore, Multi-agent, Guardrails, Streamlit]
+teamStack: [Streamlit]
 ---
 
 ## Problem

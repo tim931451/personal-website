@@ -9,6 +9,7 @@ order: 1
 featured: true
 diagram: "Architecture of the Swiss Legal Agent. A legal case passes input guardrails (PII redaction, jailbreak detection) and a router with an off-topic check to specialist agents. Their answer goes through a citation check, which returns errors to the agent, and a reviewer, which sends it back at most twice, before the draft opinion with facts, legal question, norms, subsumption, result and sources. Human in the loop on low confidence or a missing source. The agents use Apertus with endpoint routing and the retrieval (BM25 and FAISS) fed by the Fedlex ingestion; the own MCP server fedlex-mcp is planned. A jurisdiction anchor for Swiss federal law sits in every agent prompt. Tracing with LangSmith; the evaluation run compares Apertus with a commercial model using the test set and the LLM-as-a-judge. My parts: guardrails, router, agents, citation check, reviewer, human in the loop, fedlex-mcp, Apertus, tracing and evaluation run. My teammate: retrieval, Fedlex ingestion, test set and LLM-as-a-judge."
 stack: [LangGraph, MCP, Apertus, BM25, FAISS, LangSmith]
+teamStack: [BM25, FAISS]
 ---
 <!-- TODO(Tim): nach der Abgabe am 23.11.2026 prüfen, ob das Repo öffentlich wird; dann `repo:` setzen. -->
 

@@ -1,10 +1,15 @@
 ---
 import { skills } from '../data/profile';
+import { getVisibleProjects } from '../lib/projects';
+import { ownStack, visibleSkills } from '../lib/skills';
+
+const stacks = (await getVisibleProjects()).map((p) => ownStack(p.data));
+const groups = visibleSkills(skills, stacks);
 ---
 
 <div class="groups">
   {
-    skills.map((g) => (
+    groups.map((g) => (
       <div class="group">
         <h3>{g.group}</h3>
         <ul class="tags" role="list">
