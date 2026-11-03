@@ -12,7 +12,7 @@ repo: https://github.com/tim931451/ects-tracker
 
 ## Problem
 
-The module asks for machine learning and services that run in operation, not only in a notebook.
+Run a web service and a machine learning model in operation: with CI/CD, a deployed endpoint and cost monitoring.
 
 ## Approach and architecture
 

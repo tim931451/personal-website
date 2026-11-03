@@ -1,0 +1,37 @@
+---
+// Zeigt das Architekturdiagramm eines Projekts, hell und dunkel passend zum Farbmodus.
+interface Props {
+  slug: string;
+  alt: string;
+}
+const { slug, alt } = Astro.props;
+
+const files = import.meta.glob<string>('../assets/diagrams/*.svg', { eager: true, query: '?url', import: 'default' });
+const light = files[`../assets/diagrams/${slug}-light.svg`];
+const dark = files[`../assets/diagrams/${slug}-dark.svg`];
+---
+
+{
+  light && (
+    <figure class="diagram">
+      <picture>
+        {dark && <source media="(prefers-color-scheme: dark)" srcset={dark} />}
+        <img src={light} alt={alt} loading="lazy" decoding="async" />
+      </picture>
+    </figure>
+  )
+}
+
+<style>
+  .diagram {
+    margin: var(--s-6) 0;
+    padding: var(--s-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+</style>

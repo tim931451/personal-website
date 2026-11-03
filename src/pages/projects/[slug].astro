@@ -1,0 +1,118 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import Diagram from '../../components/Diagram.astro';
+import Icon from '../../components/Icon.astro';
+import { getVisibleProjects, type Project } from '../../lib/projects';
+import { splitBeforeHeading } from '../../lib/split-html';
+
+export const getStaticPaths = (async () => {
+  const projects = await getVisibleProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const { title, summary, context, period, team, status, stack, repo, grade, diagram } = project.data;
+const [beforeRole, fromRole] = splitBeforeHeading(project.rendered?.html ?? '', 'my-role');
+---
+
+<Base title={`${title} · Tim Rusch`} description={summary}>
+  <article class="container project">
+    <p class="back"><a href="/#projects"><span aria-hidden="true">←</span> All projects</a></p>
+
+    <header class="head">
+      <h1>{title}</h1>
+      <p class="summary">{summary}</p>
+      <p class="meta">
+        <span>{context} · {period}</span>
+        <span>{team}</span>
+        <StatusBadge status={status} />
+      </p>
+    </header>
+
+    <div class="prose">
+      <Fragment set:html={beforeRole} />
+      {diagram && <Diagram slug={project.id} alt={diagram} />}
+      <Fragment set:html={fromRole} />
+      {grade && <p class="grade">{grade}</p>}
+
+      <h2 id="stack">Stack</h2>
+      <ul class="tags" role="list">
+        {stack.map((s) => <li class="tag">{s}</li>)}
+      </ul>
+
+      {
+        repo && (
+          <>
+            <h2 id="links">Links</h2>
+            <p>
+              <a href={repo} rel="noopener" class="repo">
+                Repository on GitHub <Icon name="external" size={16} />
+              </a>
+            </p>
+          </>
+        )
+      }
+    </div>
+  </article>
+</Base>
+
+<style>
+  .project {
+    padding-top: var(--s-7);
+  }
+  .back a {
+    font-size: var(--step--1);
+    text-decoration: none;
+    color: var(--text-muted);
+  }
+  .back a:hover {
+    color: var(--accent);
+  }
+  .head {
+    display: grid;
+    gap: var(--s-4);
+    max-width: var(--measure);
+    margin-top: var(--s-6);
+    padding-bottom: var(--s-6);
+    border-bottom: 1px solid var(--border);
+  }
+  h1 {
+    font-size: var(--step-3);
+  }
+  .summary {
+    font-size: var(--step-1);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-5);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+  .prose {
+    max-width: var(--measure);
+  }
+  .prose :global(h2) {
+    font-size: var(--step-1);
+    margin-top: var(--s-7);
+    margin-bottom: var(--s-3);
+  }
+  .prose :global(p + p) {
+    margin-top: var(--s-4);
+  }
+  .grade {
+    margin-top: var(--s-4);
+    color: var(--text-muted);
+  }
+  .repo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    min-height: 44px;
+  }
+</style>
