@@ -7,6 +7,7 @@ team: Two-day hackathon, team of 5
 status: shipped
 order: 2
 featured: true
+diagram: "Architecture of Pythia. The Streamlit web app, built by a teammate, sends the user input through a guardrail to seven role agents on AWS Bedrock AgentCore. The agents use tools via a gateway and a knowledge base, and return the AI maturity assessment and use cases with a business case to the app. My part: guardrail, role agents, gateway and knowledge base."
 stack: [AWS Bedrock AgentCore, Multi-agent, Guardrails, Streamlit]
 ---
 
@@ -16,11 +17,11 @@ An SME that wants to use AI first needs to know where it stands and which use ca
 
 ## Approach and architecture
 
-Seven role agents run on AWS Bedrock AgentCore. They reach their tools through a gateway, work within guardrails and draw on a knowledge base. The team showed the result as a live demo in a Streamlit web app.
+The Streamlit web app sends the user input through a guardrail to seven role agents on AWS Bedrock AgentCore. The agents reach their tools through a gateway and draw on a knowledge base. The result goes back to the app.
 
 ## My role
 
-I built the AI core: seven role agents, tools via a gateway, guardrails and a knowledge base on AWS Bedrock AgentCore. A teammate built the frontend and the live demo as a Streamlit web app.
+I built the AI core: seven role agents, tools via a gateway, the input guardrail and a knowledge base on AWS Bedrock AgentCore. A teammate built the frontend and the live demo as a Streamlit web app.
 
 ## Status and results
 

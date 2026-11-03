@@ -7,6 +7,7 @@ team: Solo
 status: in progress
 order: 4
 featured: true
+diagram: "Architecture of James. German voice input goes through a local wake word (openWakeWord) and local speech recognition (Parakeet MLX) to the Claude API with tool use. Claude calls tools for weather, news and web search, runs write actions only after spoken confirmation, and answers through speech output with ElevenLabs and Piper as local fallback. About 1.7 s to first audio."
 stack: [openWakeWord, Parakeet MLX, Claude API, ElevenLabs, Piper]
 ---
 
