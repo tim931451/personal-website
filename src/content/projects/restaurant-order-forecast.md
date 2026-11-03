@@ -6,7 +6,7 @@ period: FS 2026
 team: Group project
 status: shipped
 order: 7
-stack: [Weather API, Regression, Docker, Google Cloud Run]
+stack: [Weather API, Regression, Streamlit, Docker, Google Cloud Run]
 repo: https://github.com/tim931451/fus-asia-dashboard
 grade: Grade 6.0 (Swiss scale, 6 = best)
 draft: true

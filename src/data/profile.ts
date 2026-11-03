@@ -78,10 +78,9 @@ export const timeline: TimelineGroup[] = [
 
 // Skills erscheinen nur, wenn sie `general` sind (belegt durch Ausbildung oder Lebenslauf) oder ein
 // sichtbares Projekt sie im eigenen Stack führt (Projekt-`stack` ohne `teamStack`), siehe src/lib/skills.ts.
-// Entwürfe zählen nicht: Google Cloud Run und «Regression and classification» erscheinen automatisch,
-// sobald Restaurant bzw. Ad campaign veröffentlicht sind.
-// TODO(Tim): Streamlit erscheint erst wieder, wenn ein sichtbares Projekt es als eigenen Stack führt
-// (bei Pythia war es Teamarbeit). Falls das Restaurant-Dashboard Streamlit nutzt, dort in `stack` ergänzen.
+// Entwürfe zählen nicht: Docker, Google Cloud Run und Streamlit erscheinen automatisch, sobald Restaurant
+// veröffentlicht ist, «Regression and classification» sobald Restaurant oder Ad campaign veröffentlicht ist.
+// Streamlit bei Pythia war Teamarbeit (teamStack) und zählt nicht.
 export const skills: SkillGroup[] = [
   {
     group: 'Agentic AI and LLMs',
@@ -115,7 +114,7 @@ export const skills: SkillGroup[] = [
     group: 'Engineering and deployment',
     items: [
       { name: 'FastAPI' },
-      { name: 'Docker', general: true },
+      { name: 'Docker' },
       { name: 'Google Cloud Run' },
       { name: 'CI/CD on render.com', match: ['render.com'] },
       { name: 'Streamlit' },
