@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found · Tim Rusch" description="This page does not exist." noindex>
+  <section class="container notfound">
+    <p class="code">404</p>
+    <h1>Page not found</h1>
+    <p>This page does not exist or has moved.</p>
+    <p><a href="/">Back to the start page</a></p>
+  </section>
+</Base>
+
+<style>
+  .notfound {
+    padding-block: var(--s-8);
+    display: grid;
+    gap: var(--s-4);
+    max-width: var(--measure);
+  }
+  .code {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+  h1 {
+    font-size: var(--step-3);
+  }
+</style>
