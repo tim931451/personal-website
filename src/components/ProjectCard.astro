@@ -8,15 +8,16 @@ interface Props {
 }
 const { project } = Astro.props;
 const { title, summary, context, period, team, status, stack } = project.data;
+const titleId = `card-${project.id}`;
 ---
 
 <li class="card">
-  <a href={`/projects/${project.id}/`} class="link">
+  <a href={`/projects/${project.id}/`} class="link" aria-labelledby={titleId}>
     <div class="meta">
       <span>{context} · {period}</span>
       <StatusBadge status={status} />
     </div>
-    <h3>{title}</h3>
+    <h3 id={titleId}>{title}</h3>
     <p class="summary">{summary}</p>
     <p class="team">{team}</p>
     <ul class="tags" role="list" aria-label="Stack">

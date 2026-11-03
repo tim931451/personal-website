@@ -14,7 +14,7 @@
     "check:cv": "sh scripts/check-cv.sh",
     "check:dist": "node scripts/check-dist.mjs",
     "verify": "npm test && astro check && npm run check:cv && astro build && npm run check:dist",
-    "publish": "npm run verify && wrangler pages deploy dist --project-name=timrusch --branch=main --commit-dirty=true"
+    "publish": "sh scripts/check-pushed.sh && npm run verify && wrangler pages deploy dist --project-name=timrusch --branch=main"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

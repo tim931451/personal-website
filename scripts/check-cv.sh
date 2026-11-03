@@ -8,7 +8,10 @@ patterns="${PRIVATE_PATTERNS:-.private-patterns}"
 [ -f "$pdf" ] || { echo "check-cv: $pdf fehlt, Abbruch." >&2; exit 1; }
 command -v pdftotext >/dev/null || { echo "check-cv: pdftotext fehlt (brew install poppler)." >&2; exit 1; }
 
-text=$(pdftotext "$pdf" -)
+if ! text=$(pdftotext "$pdf" - 2>/dev/null) || [ -z "$(printf '%s' "$text" | tr -d '[:space:]')" ]; then
+  echo "check-cv: $pdf liess sich nicht als Text lesen, Abbruch." >&2
+  exit 1
+fi
 if printf '%s' "$text" | grep -E -q -f "$patterns"; then
   echo "check-cv: $pdf enthält private Angaben. Nicht veröffentlichen." >&2
   exit 1

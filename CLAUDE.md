@@ -22,10 +22,16 @@ Spec: `docs/superpowers/specs/2026-11-03-personal-website-design.md` (verbindlic
 | `npm test` | Unit-Tests (`node --test`) |
 | `npm run verify` | Tests, `astro check`, CV-Check, Build, `check:dist` |
 | `npm run preview` | gebaute Seite lokal ansehen |
-| `npm run publish` | `verify` und danach Deploy nach Cloudflare Pages |
+| `npm run publish` | Push-Check, `verify` und danach Deploy nach Cloudflare Pages |
 
-`publish` bricht ab, wenn `.private-patterns` fehlt oder das CV private Angaben enthält, und wenn
-`check:dist` Regelverstösse findet. `.private-patterns` ist gitignored und liegt nur lokal.
+`publish` bricht ab, wenn das Arbeitsverzeichnis nicht sauber oder `HEAD` nicht gepusht ist
+(`scripts/check-pushed.sh`), wenn `.private-patterns` fehlt, das CV private Angaben oder eine
+Telefonnummer enthält oder nicht lesbar ist, und wenn `check:dist` Regelverstösse findet
+(sichtbarer Text und Attribute wie meta description, alt, aria-label).
+
+`.private-patterns` ist gitignored und liegt nur lokal: eine Zeile pro Suchmuster (ERE) mit Tims
+privaten Angaben (Strasse, PLZ mit Ort, Handynummer, Geburtsdatum). Auf einem neuen Rechner von Tim
+neu anlegen lassen; ohne die Datei überspringt `npm test` die CV-Tests und `publish` bricht ab.
 
 ## Neues Projekt ergänzen
 

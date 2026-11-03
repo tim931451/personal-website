@@ -12,9 +12,10 @@ const htmlFiles = (dir) =>
     return statSync(p).isDirectory() ? htmlFiles(p) : p.endsWith('.html') ? [p] : [];
   });
 
-const draftSlugs = existsSync('src/content/projects')
-  ? readdirSync('src/content/projects')
-      .filter((f) => /^draft:\s*true\s*$/m.test(readFileSync(join('src/content/projects', f), 'utf8')))
+const contentDir = process.env.CONTENT_DIR ?? 'src/content/projects';
+const draftSlugs = existsSync(contentDir)
+  ? readdirSync(contentDir)
+      .filter((f) => /^draft:\s*true\b/m.test(readFileSync(join(contentDir, f), 'utf8')))
       .map((f) => f.replace(/\.md$/, ''))
   : [];
 
@@ -26,12 +27,26 @@ const visibleText = (html) =>
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' ');
 
+/** Attributtexte, die Menschen zu sehen oder zu hören bekommen (Suchtreffer, Vorschau, Screenreader). */
+const attributeText = (html) =>
+  [
+    ...html.matchAll(/<meta\s+(?:name|property)="(?:description|og:title|og:description|og:image:alt|twitter:[^"]*)"\s+content="([^"]*)"/g),
+    ...html.matchAll(/\s(?:alt|aria-label|title)="([^"]*)"/g),
+  ]
+    .map((m) => m[1])
+    .join(' ');
+
 const ids = (html) => new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
 const urlPath = (file) => '/' + relative(root, file).split('\\').join('/').replace(/index\.html$/, '');
 
 /** Löst einen internen Pfad auf eine Datei in dist auf. */
 function resolveTarget(path) {
-  const clean = decodeURI(path);
+  let clean;
+  try {
+    clean = decodeURI(path);
+  } catch {
+    return undefined;
+  }
   const candidates = clean.endsWith('/') ? [join(root, clean, 'index.html')] : [join(root, clean), join(root, clean, 'index.html')];
   return candidates.find((c) => existsSync(c) && statSync(c).isFile());
 }
@@ -49,7 +64,7 @@ const cache = new Map(files.map((f) => [f, readFileSync(f, 'utf8')]));
 for (const file of files) {
   const html = cache.get(file);
   const where = relative(root, file);
-  const text = visibleText(html);
+  const text = visibleText(html) + ' ' + attributeText(html);
 
   for (const [re, label] of FORBIDDEN) {
     const m = text.match(re);

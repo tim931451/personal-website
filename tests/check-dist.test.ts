@@ -16,7 +16,8 @@ function site(files: Record<string, string>): string {
   }
   return dir;
 }
-const check = (dir: string) => spawnSync('node', ['scripts/check-dist.mjs', dir], { encoding: 'utf8' });
+const check = (dir: string, env: Record<string, string> = {}) =>
+  spawnSync('node', ['scripts/check-dist.mjs', dir], { encoding: 'utf8', env: { ...process.env, ...env } });
 
 test('check-dist passes a clean site', () => {
   const dir = site({
@@ -57,4 +58,26 @@ test('check-dist rejects a Swiss phone number', () => {
 
 test('check-dist rejects links to draft projects', () => {
   assert.equal(check(site({ 'index.html': page('<a href="/projects/ad-campaign-prediction/">x</a>'), 'projects/ad-campaign-prediction/index.html': page('<p>x</p>') })).status, 1);
+});
+
+test('check-dist rejects long dashes in the meta description', () => {
+  const head = '<meta name="description" content="a — b"><link rel="canonical" href="https://x/"><meta property="og:image" content="https://x/og.png">';
+  assert.equal(check(site({ 'index.html': page('<p>ok</p>', head) })).status, 1);
+});
+
+test('check-dist rejects placeholder words in alt text', () => {
+  assert.equal(check(site({ 'index.html': page('<img src="/a.png" alt="TODO diagram">') })).status, 1);
+});
+
+test('check-dist reports a malformed href as broken link instead of crashing', () => {
+  const r = check(site({ 'index.html': page('<a href="/50%-done/">x</a>') }));
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /kaputter Link/);
+});
+
+test('check-dist detects drafts marked with a trailing YAML comment', () => {
+  const content = mkdtempSync(join(tmpdir(), 'content-'));
+  writeFileSync(join(content, 'secret.md'), '---\ntitle: x\ndraft: true # später\n---\n');
+  const dir = site({ 'index.html': page('<a href="/projects/secret/">x</a>'), 'projects/secret/index.html': page('<p>x</p>') });
+  assert.equal(check(dir, { CONTENT_DIR: content }).status, 1);
 });

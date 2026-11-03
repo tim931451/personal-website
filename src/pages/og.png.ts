@@ -17,7 +17,7 @@ export const GET: APIRoute = async () => {
     .png()
     .toBuffer();
 
-  const [role, focus] = headline.split(' | ');
+  const [role, focus = ''] = headline.split(' | ');
   const font = "'Helvetica Neue', Helvetica, Arial, sans-serif";
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
     <rect width="${W}" height="${H}" fill="#fafaf9" />
