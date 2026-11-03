@@ -10,15 +10,22 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node --test 'tests/**/*.test.ts'"
+    "test": "node --test 'tests/**/*.test.ts'",
+    "check:cv": "sh scripts/check-cv.sh",
+    "check:dist": "node scripts/check-dist.mjs",
+    "verify": "npm test && astro check && npm run check:cv && astro build && npm run check:dist",
+    "publish": "npm run verify && wrangler pages deploy dist --project-name=timrusch --branch=main --commit-dirty=true"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/geist": "^5.3.0",
-    "astro": "^7.4.5"
+    "astro": "^7.4.5",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "typescript": "^6.0.3"
-  }
+    "typescript": "^6.0.3",
+    "wrangler": "^4.157.0"
+  },
+  "private": true
 }

@@ -20,7 +20,7 @@ const { title, summary, context, period, team, status, stack, repo, grade, diagr
 const [beforeRole, fromRole] = splitBeforeHeading(project.rendered?.html ?? '', 'my-role');
 ---
 
-<Base title={`${title} · Tim Rusch`} description={summary}>
+<Base title={`${title} · Tim Rusch`} description={summary} ogType="article">
   <article class="container project">
     <p class="back"><a href="/#projects"><span aria-hidden="true">←</span> All projects</a></p>
 

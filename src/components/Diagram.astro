@@ -13,7 +13,7 @@ const dark = files[`../assets/diagrams/${slug}-dark.svg`];
 
 {
   light && (
-    <figure class="diagram">
+    <figure class="diagram" tabindex="0" role="group" aria-label="Architecture diagram, scrollable">
       <picture>
         {dark && <source media="(prefers-color-scheme: dark)" srcset={dark} />}
         <img src={light} alt={alt} loading="lazy" decoding="async" />
@@ -29,9 +29,11 @@ const dark = files[`../assets/diagrams/${slug}-dark.svg`];
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface);
+    overflow-x: auto;
   }
   img {
     width: 100%;
+    min-width: 600px;
     height: auto;
   }
 </style>

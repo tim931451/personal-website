@@ -8,14 +8,27 @@ import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
 import { getVisibleProjects } from '../lib/projects';
 import { splitFeatured } from '../lib/project-order';
+import { name, headline, links } from '../data/profile';
 
 const { featured, more } = splitFeatured(await getVisibleProjects());
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name,
+  jobTitle: headline,
+  url: Astro.site?.href,
+  email: `mailto:${links.email}`,
+  sameAs: [links.github, links.linkedin],
+  affiliation: { '@type': 'CollegeOrUniversity', name: 'FHNW School of Business' },
+};
 ---
 
 <Base
   title="Tim Rusch · Business AI Student"
   description="Tim Rusch, Business AI student at FHNW. Projects in agentic AI, machine learning and data engineering. Looking for a working student position or internship from January 2027."
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(person)} />
   <Hero />
 
   <section id="projects" class="section container" aria-labelledby="projects-title">
