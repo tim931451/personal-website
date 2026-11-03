@@ -1,0 +1,106 @@
+---
+import { timeline } from '../data/profile';
+---
+
+<ol class="timeline" role="list">
+  {
+    timeline.map((item) => (
+      <li class:list={['item', { upcoming: item.upcoming }]}>
+        <p class="when">
+          {item.upcoming && <span class="label">Upcoming</span>}
+          {item.when}
+        </p>
+        <div class="body">
+          <h3>{item.title}</h3>
+          <p class="org">{item.org}</p>
+          {item.text && <p class="text">{item.text}</p>}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .timeline {
+    display: grid;
+    max-width: 52rem;
+  }
+  .item {
+    position: relative;
+    display: grid;
+    gap: var(--s-1);
+    padding: 0 0 var(--s-6) var(--s-5);
+    border-left: 1px solid var(--border);
+  }
+  .item:last-child {
+    padding-bottom: 0;
+  }
+  .item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 0.45rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--border-strong);
+  }
+  .upcoming::before {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+  .when {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    align-items: baseline;
+  }
+  .label {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  h3 {
+    font-size: var(--step-0);
+  }
+  .org {
+    color: var(--text-muted);
+  }
+  .text {
+    margin-top: var(--s-2);
+    max-width: var(--measure);
+  }
+  @media (min-width: 720px) {
+    .item {
+      grid-template-columns: 11rem 1fr;
+      gap: var(--s-5);
+      border-left: 0;
+      padding-left: 0;
+    }
+    .item::before {
+      left: calc(11rem + var(--s-5) / 2 - 4px);
+    }
+    .item::after {
+      content: '';
+      position: absolute;
+      left: calc(11rem + var(--s-5) / 2);
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+      z-index: -1;
+    }
+    .body {
+      padding-left: var(--s-5);
+    }
+    .when {
+      flex-direction: column;
+      gap: 0;
+      text-align: right;
+      align-items: flex-end;
+    }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import type { Project } from '../lib/projects';
+import StatusBadge from './StatusBadge.astro';
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const { title, summary, context, period, status } = project.data;
+---
+
+<li>
+  <a href={`/projects/${project.id}/`} class="row">
+    <span class="main">
+      <span class="title">{title}</span>
+      <span class="summary">{summary}</span>
+    </span>
+    <span class="side">
+      <span class="context">{context} · {period}</span>
+      <StatusBadge status={status} />
+    </span>
+  </a>
+</li>
+
+<style>
+  li + li {
+    border-top: 1px solid var(--border);
+  }
+  .row {
+    display: grid;
+    gap: var(--s-2);
+    padding-block: var(--s-4);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .main {
+    display: grid;
+    gap: var(--s-1);
+  }
+  .title {
+    font-weight: 600;
+    transition: color var(--ease);
+  }
+  .row:hover .title {
+    color: var(--accent);
+  }
+  .summary {
+    color: var(--text-muted);
+  }
+  .side {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-1) var(--s-4);
+    align-items: baseline;
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+  @media (min-width: 720px) {
+    .row {
+      grid-template-columns: 1fr 19rem;
+      gap: var(--s-6);
+    }
+    .side {
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+    }
+  }
+</style>

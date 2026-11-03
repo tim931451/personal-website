@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+import { links } from '../data/profile';
+---
+
+<div class="contact">
+  <p class="lead">Open to a working student position or internship in data or AI from January 2027.</p>
+  <ul role="list" class="channels">
+    <li>
+      <a href={`mailto:${links.email}`}><Icon name="mail" />{links.email}</a>
+    </li>
+    <li>
+      <a href={links.linkedin} rel="noopener"><Icon name="linkedin" />linkedin.com/in/tim-rusch</a>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .contact {
+    display: grid;
+    gap: var(--s-5);
+    max-width: var(--measure);
+  }
+  .lead {
+    font-size: var(--step-1);
+  }
+  .channels {
+    display: grid;
+    gap: var(--s-3);
+  }
+  .channels a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    min-height: 44px;
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+</style>

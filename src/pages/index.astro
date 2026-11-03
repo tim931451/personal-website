@@ -1,10 +1,77 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectRow from '../components/ProjectRow.astro';
+import Timeline from '../components/Timeline.astro';
+import Skills from '../components/Skills.astro';
+import Contact from '../components/Contact.astro';
+import { getVisibleProjects } from '../lib/projects';
+import { splitFeatured } from '../lib/project-order';
+
+const { featured, more } = splitFeatured(await getVisibleProjects());
 ---
 
 <Base
   title="Tim Rusch · Business AI Student"
-  description="Tim Rusch, Business AI student at FHNW. Agentic AI, machine learning and data engineering projects."
+  description="Tim Rusch, Business AI student at FHNW. Projects in agentic AI, machine learning and data engineering. Looking for a working student position or internship from January 2027."
 >
-  <div class="container"></div>
+  <Hero />
+
+  <section id="projects" class="section container" aria-labelledby="projects-title">
+    <div class="section-head"><span class="index">01</span><h2 id="projects-title">Selected projects</h2></div>
+    <ul class="cards" role="list">
+      {featured.map((p) => <ProjectCard project={p} />)}
+    </ul>
+    {
+      more.length > 0 && (
+        <>
+          <h3 class="more-title">More projects</h3>
+          <ul class="rows" role="list">
+            {more.map((p) => <ProjectRow project={p} />)}
+          </ul>
+        </>
+      )
+    }
+  </section>
+
+  <section id="experience" class="section container" aria-labelledby="experience-title">
+    <div class="section-head"><span class="index">02</span><h2 id="experience-title">Experience and education</h2></div>
+    <Timeline />
+  </section>
+
+  <section id="skills" class="section container" aria-labelledby="skills-title">
+    <div class="section-head"><span class="index">03</span><h2 id="skills-title">Skills</h2></div>
+    <Skills />
+  </section>
+
+  <section id="contact" class="section container" aria-labelledby="contact-title">
+    <div class="section-head"><span class="index">04</span><h2 id="contact-title">Contact</h2></div>
+    <Contact />
+  </section>
 </Base>
+
+<style>
+  .cards {
+    display: grid;
+    gap: var(--s-4);
+  }
+  @media (min-width: 768px) {
+    .cards {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-5);
+    }
+  }
+  .more-title {
+    margin-top: var(--s-7);
+    margin-bottom: var(--s-2);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .rows {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import { skills } from '../data/profile';
+---
+
+<div class="groups">
+  {
+    skills.map((g) => (
+      <div class="group">
+        <h3>{g.group}</h3>
+        <ul class="tags" role="list">
+          {g.items.map((i) => <li class="tag">{i}</li>)}
+        </ul>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .groups {
+    display: grid;
+    gap: var(--s-6) var(--s-7);
+  }
+  .group {
+    display: grid;
+    gap: var(--s-3);
+    align-content: start;
+  }
+  h3 {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--text-muted);
+  }
+  .tag {
+    color: var(--text);
+    background: var(--surface);
+  }
+  @media (min-width: 720px) {
+    .groups {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

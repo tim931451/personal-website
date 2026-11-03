@@ -1,0 +1,124 @@
+---
+import { Picture } from 'astro:assets';
+import portrait from '../assets/portrait.jpg';
+import Icon from './Icon.astro';
+import { name, headline, intro, location, links } from '../data/profile';
+---
+
+<section class="hero container" aria-labelledby="hero-title">
+  <div class="text">
+    <h1 id="hero-title">{name}</h1>
+    <p class="headline">{headline}</p>
+    <p class="intro">{intro}</p>
+    <p class="location">{location}</p>
+    <ul class="actions" role="list">
+      <li>
+        <a class="btn primary" href={links.cv} download="Lebenslauf_Tim_Rusch.pdf">
+          <Icon name="download" />Download CV (German, PDF)
+        </a>
+      </li>
+      <li><a class="btn" href={links.github} rel="noopener"><Icon name="github" />GitHub</a></li>
+      <li><a class="btn" href={links.linkedin} rel="noopener"><Icon name="linkedin" />LinkedIn</a></li>
+      <li><a class="btn" href={`mailto:${links.email}`}><Icon name="mail" />Email</a></li>
+    </ul>
+  </div>
+  <Picture
+    class="portrait"
+    pictureAttributes={{ class: 'portrait-wrap' }}
+    src={portrait}
+    formats={['avif', 'webp']}
+    widths={[120, 240, 480]}
+    sizes="(max-width: 720px) 120px, 240px"
+    alt="Portrait of Tim Rusch"
+    loading="eager"
+    fetchpriority="high"
+  />
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+    padding-block: var(--s-8) 0;
+  }
+  .hero :global(.portrait-wrap) {
+    order: -1;
+  }
+  .hero :global(.portrait) {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius);
+    object-fit: cover;
+    background: var(--border);
+  }
+  h1 {
+    font-size: var(--step-3);
+  }
+  .headline {
+    margin-top: var(--s-3);
+    font-size: var(--step-1);
+    color: var(--text-muted);
+    font-weight: 450;
+  }
+  .intro {
+    margin-top: var(--s-5);
+    max-width: 58ch;
+    font-size: var(--step-1);
+    line-height: 1.55;
+  }
+  .location {
+    margin-top: var(--s-3);
+    color: var(--text-muted);
+    font-size: var(--step--1);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    margin-top: var(--s-6);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 44px;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    color: var(--text);
+    background: var(--surface);
+    text-decoration: none;
+    font-size: var(--step--1);
+    font-weight: 500;
+    transition: border-color var(--ease), background-color var(--ease), color var(--ease);
+  }
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-contrast);
+  }
+  .btn.primary:hover {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+  }
+  @media (min-width: 720px) {
+    .hero {
+      grid-template-columns: 1fr 240px;
+      align-items: start;
+      gap: var(--s-7);
+    }
+    .hero :global(.portrait-wrap) {
+      order: 0;
+    }
+    .hero :global(.portrait) {
+      width: 240px;
+      height: 240px;
+    }
+  }
+</style>
