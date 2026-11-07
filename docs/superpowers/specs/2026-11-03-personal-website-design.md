@@ -58,8 +58,8 @@ was er baut, und bei Teamprojekten klar zeigen, was sein Anteil war.
 
 ## 4. Assets
 
-- **Foto:** `~/Library/CloudStorage/OneDrive-Personal/HS26/Claude outputs/Profilbild_quadratisch.jpg`
-  (1080×1080). Original unverändert ins Repo (`src/assets/`), Ausgabe über `astro:assets` als
+- **Foto:** Porträt (1122×1402, WebP), am 2026-11-07 von Tim geliefert, ersetzt `Profilbild_quadratisch.jpg`.
+  Original unverändert ins Repo (`src/assets/portrait.webp`), im Hero quadratisch per `object-fit: cover`, Ausgabe über `astro:assets` als
   AVIF/WebP in passenden Grössen. Alt-Text: «Portrait of Tim Rusch».
 - **CV:** NUR `~/Library/CloudStorage/OneDrive-Personal/HS26/Claude outputs/Lebenslauf_Tim_Rusch_2026-11_web.pdf`
   → `public/cv.pdf`, unverändert. Das Original (mit Adresse/Telefon) kommt nie ins Repo.
@@ -69,7 +69,7 @@ was er baut, und bei Teamprojekten klar zeigen, was sein Anteil war.
   der gitignorten Datei `.private-patterns`; fehlt sie, bricht das Skript ebenfalls ab.
   Dieses Spec-Dokument kommt ohne die Muster ins öffentliche Repo.
   Button: «Download CV (German, PDF)».
-- **Foto-Metadaten:** am 2026-11-03 geprüft, keine GPS- oder Kameradaten. Original geht unverändert ins Repo.
+- **Foto-Metadaten:** am 2026-11-07 geprüft (neues Foto), nur sRGB-Profil, keine EXIF-, XMP- oder GPS-Daten. Original geht unverändert ins Repo.
 
 ## 5. Design (von Tim bestätigt)
 

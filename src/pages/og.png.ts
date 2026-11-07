@@ -11,7 +11,7 @@ const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 export const GET: APIRoute = async () => {
   const mask = Buffer.from(`<svg width="${PHOTO}" height="${PHOTO}"><rect width="${PHOTO}" height="${PHOTO}" rx="18" /></svg>`);
-  const photo = await sharp('src/assets/portrait.jpg')
+  const photo = await sharp('src/assets/portrait.webp')
     .resize(PHOTO, PHOTO)
     .composite([{ input: mask, blend: 'dest-in' }])
     .png()

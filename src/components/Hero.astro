@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import portrait from '../assets/portrait.jpg';
+import portrait from '../assets/portrait.webp';
 import Icon from './Icon.astro';
 import { name, headline, intro, location, links } from '../data/profile';
 ---
@@ -27,6 +27,7 @@ import { name, headline, intro, location, links } from '../data/profile';
     pictureAttributes={{ class: 'portrait-wrap' }}
     src={portrait}
     formats={['avif', 'webp']}
+    fallbackFormat="jpg"
     widths={[120, 240, 480]}
     sizes="(max-width: 720px) 120px, 240px"
     alt="Portrait of Tim Rusch"
